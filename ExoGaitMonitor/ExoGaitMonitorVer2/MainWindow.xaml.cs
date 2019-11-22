@@ -21,7 +21,7 @@ namespace ExoGaitMonitorVer2
     /// </summary>
     public partial class MainWindow : Window
     {
-
+        //test20191122
         #region 声明
         //主界面窗口
 
