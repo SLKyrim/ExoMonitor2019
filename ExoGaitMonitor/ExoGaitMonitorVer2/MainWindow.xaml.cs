@@ -16,15 +16,12 @@ using System.Net;
 
 namespace ExoGaitMonitorVer2
 {
-	//test20191122.21:36
-    //1213
     /// <summary>
     /// MainWindow.xaml 的交互逻辑
     /// </summary>
     public partial class MainWindow : Window
     {
-        //test20191122
-        //test3
+
         #region 声明
         //主界面窗口
 
