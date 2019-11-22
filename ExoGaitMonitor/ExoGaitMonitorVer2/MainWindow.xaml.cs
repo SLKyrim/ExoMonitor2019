@@ -16,6 +16,7 @@ using System.Net;
 
 namespace ExoGaitMonitorVer2
 {
+	//test20191122.21:36
     //1213
     /// <summary>
     /// MainWindow.xaml 的交互逻辑
