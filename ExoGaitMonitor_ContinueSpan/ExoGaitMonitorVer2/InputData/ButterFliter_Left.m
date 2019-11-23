@@ -61,7 +61,7 @@ for i=201:301
 end
 fclose(fid);
 
-fid=fopen(['接正常步的正常步迈右腿.txt'],'w');
+fid=fopen(['接正常步的正常步迈右腿2.txt'],'w');
 for i=301:401
     for j=1:4
         fprintf(fid,'%f\t',data(i,j));

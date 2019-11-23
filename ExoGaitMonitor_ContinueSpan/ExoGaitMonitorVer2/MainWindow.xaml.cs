@@ -56,14 +56,14 @@ namespace ExoGaitMonitorVer2
         private int emg_cm = 0; //肌电命令：仅在外骨骼站立时且脑电命令为1时肌电可进行控制，1为走一个完整步态周期，0为不动
         private int pattern = 0; //外骨骼步态模式
         private bool main_s = false; //总开关，0为停止外骨骼，1为使能外骨骼
-     //   private int cnt = 0; // 进入越障步态后完成正常步的周期数
+     // private int cnt = 0; // 进入越障步态后完成正常步的周期数
         private int obstacle_cnt = 0; // 越障个数计数器
         private int normal_cnt = 0; // 步数计数器
         private const int MAX_CNT = 12; // MAX_CNT=总步数最大值，总步数=越障前正常步数OVER_NORMAL_MAX_CN+跨障步数（4）+越障后正常步数，包含起始步和收步,
         private const int OBSTACLE_NUM = 1; // 设置越障个数
         private const int N = 0; // Demo越障前正常步步数
         private int over_normal_cnt = 0; // 越障前正常步计数器
-        private const int OVER_NORMAL_MAX_CNT = 4; // 越障前正常步最大步数，包含起始步，该值应为一个偶数 
+        private const int OVER_NORMAL_MAX_CNT = 4; // 越障前正常步最大步数，包含起始步
 
         // 测试用
         private const int ENABLE = 1; // 使能外骨骼的命令
@@ -252,6 +252,7 @@ namespace ExoGaitMonitorVer2
                             {
                                 try
                                 {
+
                                     stand2.start_Standup2(motors);
                                 }
                                 catch (Exception ee)
@@ -335,7 +336,7 @@ namespace ExoGaitMonitorVer2
                             //MessageBox.Show("4");
                             try
                             {
-                                pvt.StartPVT(motors, "..\\..\\InputData\\正常步左脚收步.txt", NORMAL_SPEED);
+                                pvt.StartPVT(motors, "..\\..\\InputData\\正常步左腿收步.txt", NORMAL_SPEED);
                             }
                             catch (Exception e)
                             {
@@ -349,7 +350,7 @@ namespace ExoGaitMonitorVer2
                             //MessageBox.Show("4");
                             try
                             {
-                                pvt.StartPVT(motors, "..\\..\\InputData\\正常步右脚收步.txt", NORMAL_SPEED);
+                                pvt.StartPVT(motors, "..\\..\\InputData\\正常步右腿收步.txt", NORMAL_SPEED);
                             }
                             catch (Exception e)
                             {
@@ -590,7 +591,7 @@ namespace ExoGaitMonitorVer2
                     try
                     {
                         stand2.start_Standup2(motors);
-                        state = 4;
+                      //  state = 4;
                     }
                     catch (Exception ee)
                     {
@@ -626,7 +627,7 @@ namespace ExoGaitMonitorVer2
                 statusBar.Background = new SolidColorBrush(Color.FromArgb(255, 230, 20, 20));
                 statusInfoTextBlock.Text = "脑肌电融合控制模式";
                 bt.Content = "EEG+EMG Stop";
-                state = 0;
+                state = 0;  //坐立状态
                // cnt = 0;
                 obstacle_cnt = 0; // 越障个数计数器
                 normal_cnt = 0; // 正常循环步步数计数器

@@ -113,9 +113,9 @@
                                         <Grid DockPanel.Dock="Top" Width="200">
                                             <StackPanel Margin="0">
                                                 <TextBlock Foreground="#FF0078D7" FontSize="16" Padding="5"><Run Text="电机描述："/></TextBlock>
-                                                <TextBlock Padding="5"><Run Text="电机1左膝，向后弯曲角为负"/></TextBlock>
+                                                <TextBlock Padding="5"><Run Text="电机1左膝，向后弯曲角为正"/></TextBlock>
                                                 <TextBlock Padding="5"><Run Text="电机2左髋，向后弯曲角为负"/></TextBlock>
-                                                <TextBlock Padding="5"><Run Text="电机3右髋，向后弯曲角为正"/></TextBlock>
+                                                <TextBlock Padding="5"><Run Text="电机3右髋，向后弯曲角为负"/></TextBlock>
                                                 <TextBlock Padding="5"><Run Text="电机4右膝，向后弯曲角为正"/></TextBlock>
                                             </StackPanel>
                                         </Grid>
