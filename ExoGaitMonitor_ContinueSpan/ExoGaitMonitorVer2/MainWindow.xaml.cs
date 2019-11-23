@@ -278,7 +278,7 @@ namespace ExoGaitMonitorVer2
                             //MessageBox.Show("2");
                             try
                             {
-                                pvt.StartPVT(motors, "..\\..\\InputData\\起始步迈左腿.txt", NORMAL_SPEED);//"..\\..\\INPUT201908051539\\左脚起始步高.txt"
+                                pvt.StartPVT(motors, "..\\..\\InputData\\起始步迈左腿-扩展.txt", NORMAL_SPEED);//"..\\..\\INPUT201908051539\\左脚起始步高.txt"
                             }
                             catch (Exception e)
                             {
@@ -293,7 +293,7 @@ namespace ExoGaitMonitorVer2
                             try
                             {
                                 //  walk_step += 1;
-                                pvt.StartPVT(motors, "..\\..\\InputData\\接起始步的正常步迈右腿.txt", NORMAL_SPEED);
+                                pvt.StartPVT(motors, "..\\..\\InputData\\接起始步的正常步迈右腿-扩展.txt", NORMAL_SPEED);
                             }
                             catch (Exception e)
                             {
@@ -307,7 +307,7 @@ namespace ExoGaitMonitorVer2
                             //MessageBox.Show("3");
                             try
                             {
-                                pvt.StartPVT(motors, "..\\..\\InputData\\正常步的迈左腿.txt", NORMAL_SPEED);
+                                pvt.StartPVT(motors, "..\\..\\InputData\\正常步的迈左腿-扩展.txt", NORMAL_SPEED);
                             }
                             catch (Exception e)
                             {
@@ -321,7 +321,7 @@ namespace ExoGaitMonitorVer2
                             //MessageBox.Show("4");
                             try
                             {
-                                pvt.StartPVT(motors, "..\\..\\InputData\\接正常步的正常步迈右腿.txt", NORMAL_SPEED);
+                                pvt.StartPVT(motors, "..\\..\\InputData\\接正常步的正常步迈右腿-扩展.txt", NORMAL_SPEED);
                             }
                             catch (Exception e)
                             {
