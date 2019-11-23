@@ -366,7 +366,7 @@ namespace ExoGaitMonitorVer2
                             //MessageBox.Show("2");
                             try
                             {
-                                pvt.StartPVT(motors, "..\\..\\InputData\\接跨步前的正常步迈左腿.txt", OBSTACLE_SPEED);//"..\\..\\INPUT201908051539\\左脚起始步高.txt"
+                                pvt.StartPVT(motors, "..\\..\\InputData\\接跨步前的正常步迈左腿_扩展.txt", OBSTACLE_SPEED);//"..\\..\\INPUT201908051539\\左脚起始步高.txt"
                             }
                             catch (Exception e)
                             {
@@ -380,7 +380,7 @@ namespace ExoGaitMonitorVer2
                             //MessageBox.Show("2");
                             try
                             {
-                                pvt.StartPVT(motors, "..\\..\\InputData\\越障起始步.txt", OBSTACLE_SPEED);//"..\\..\\INPUT201908051539\\左脚起始步高.txt"
+                                pvt.StartPVT(motors, "..\\..\\InputData\\越障起始步_扩展.txt", OBSTACLE_SPEED);//"..\\..\\INPUT201908051539\\左脚起始步高.txt"
                             }
                             catch (Exception e)
                             {
@@ -395,7 +395,7 @@ namespace ExoGaitMonitorVer2
                             //MessageBox.Show("2");
                             try
                             {
-                                pvt.StartPVT(motors, "..\\..\\InputData\\越障第二步.txt", OBSTACLE_SPEED);//"..\\..\\INPUT201908051539\\左脚起始步高.txt"
+                                pvt.StartPVT(motors, "..\\..\\InputData\\越障第二步_扩展.txt", OBSTACLE_SPEED);//"..\\..\\INPUT201908051539\\左脚起始步高.txt"
                             }
                             catch (Exception e)
                             {
@@ -410,7 +410,7 @@ namespace ExoGaitMonitorVer2
                             //MessageBox.Show("2");
                             try
                             {
-                                pvt.StartPVT(motors, "..\\..\\InputData\\越障收步.txt", OBSTACLE_SPEED);//"..\\..\\INPUT201908051539\\左脚起始步高.txt"
+                                pvt.StartPVT(motors, "..\\..\\InputData\\越障收步_扩展.txt", OBSTACLE_SPEED);//"..\\..\\INPUT201908051539\\左脚起始步高.txt"
                             }
                             catch (Exception e)
                             {
@@ -552,6 +552,7 @@ namespace ExoGaitMonitorVer2
                     {
                         pvt.start_Sitdown2(motors);
                         state = 0;
+                        eeg_cm = -1;
                     }
                     catch
                     { MessageBox.Show("sit出错"); }
@@ -591,7 +592,7 @@ namespace ExoGaitMonitorVer2
                     try
                     {
                         stand2.start_Standup2(motors);
-                      //  state = 4;
+                        //state = 1;
                     }
                     catch (Exception ee)
                     {
