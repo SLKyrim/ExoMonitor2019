@@ -67,7 +67,7 @@ namespace ExoGaitMonitorVer2
         // 越障后正常循环步流程：直立 -> 起始步迈左腿 -> 接起始步的正常步迈右腿 -> 正常步迈左腿 -> 【接正常步的正常步迈右腿 -> 正常步迈左腿】 -> 接正常步的迈右腿收步
         // 流程中【】内循环次数由AFTER_NORMAL_MAX_CNT设置，即即使设置为0，该流程至少也会走4步
         private int after_normal_cnt = 0; // 越障后正常步计数器
-        private const int AFTER_NORMAL_MAX_CNT = 3; // 越障后正常步最大步数 
+        private const int AFTER_NORMAL_MAX_CNT = 0; // 越障后正常步最大步数 
 
         // 测试用
         private const int ENABLE = 1; // 使能外骨骼的命令
@@ -242,7 +242,7 @@ namespace ExoGaitMonitorVer2
                             //MessageBox.Show("2");
                             try
                             {
-                                pvt.StartPVT(motors, "..\\..\\InputData\\起始步迈左腿.txt", NORMAL_SPEED);
+                                pvt.StartPVT(motors, "..\\..\\InputData\\起始步迈左腿-扩展.txt", NORMAL_SPEED);
                             }
                             catch (Exception e)
                             {
@@ -255,7 +255,7 @@ namespace ExoGaitMonitorVer2
                             //MessageBox.Show("3");
                             try
                             {
-                                pvt.StartPVT(motors, "..\\..\\InputData\\接起始步的正常步迈右腿.txt", NORMAL_SPEED);
+                                pvt.StartPVT(motors, "..\\..\\InputData\\接起始步的正常步迈右腿-扩展.txt", NORMAL_SPEED);
                             }
                             catch (Exception e)
                             {
@@ -269,7 +269,7 @@ namespace ExoGaitMonitorVer2
                             //MessageBox.Show("3");
                             try
                             {
-                                pvt.StartPVT(motors, "..\\..\\InputData\\正常步迈左腿.txt", NORMAL_SPEED);
+                                pvt.StartPVT(motors, "..\\..\\InputData\\正常步迈左腿-扩展.txt", NORMAL_SPEED);
                             }
                             catch (Exception e)
                             {
@@ -289,7 +289,7 @@ namespace ExoGaitMonitorVer2
                             //MessageBox.Show("4");
                             try
                             {
-                                pvt.StartPVT(motors, "..\\..\\InputData\\接正常步的正常步迈右腿.txt", NORMAL_SPEED);
+                                pvt.StartPVT(motors, "..\\..\\InputData\\接正常步的正常步迈右腿-扩展.txt", NORMAL_SPEED);
                             }
                             catch (Exception e)
                             {
@@ -303,7 +303,7 @@ namespace ExoGaitMonitorVer2
                             //MessageBox.Show("4");
                             try
                             {
-                                pvt.StartPVT(motors, "..\\..\\InputData\\接正常步的迈右腿收步.txt", NORMAL_SPEED);
+                                pvt.StartPVT(motors, "..\\..\\InputData\\接正常步的迈右腿收步-扩展.txt", NORMAL_SPEED);
                             }
                             catch (Exception e)
                             {
@@ -352,7 +352,7 @@ namespace ExoGaitMonitorVer2
                             //MessageBox.Show("2");
                             try
                             {
-                                pvt.StartPVT(motors, "..\\..\\InputData\\起始步迈左腿.txt", NORMAL_SPEED);
+                                pvt.StartPVT(motors, "..\\..\\InputData\\起始步迈左腿-扩展.txt", NORMAL_SPEED);
                             }
                             catch (Exception e)
                             {
@@ -365,7 +365,7 @@ namespace ExoGaitMonitorVer2
                             //MessageBox.Show("3");
                             try
                             {
-                                pvt.StartPVT(motors, "..\\..\\InputData\\接起始步的正常步迈右腿.txt", NORMAL_SPEED);
+                                pvt.StartPVT(motors, "..\\..\\InputData\\接起始步的正常步迈右腿-扩展.txt", NORMAL_SPEED);
                             }
                             catch (Exception e)
                             {
@@ -379,7 +379,7 @@ namespace ExoGaitMonitorVer2
                             //MessageBox.Show("3");
                             try
                             {
-                                pvt.StartPVT(motors, "..\\..\\InputData\\正常步迈左腿.txt", NORMAL_SPEED);
+                                pvt.StartPVT(motors, "..\\..\\InputData\\正常步迈左腿-扩展.txt", NORMAL_SPEED);
                             }
                             catch (Exception e)
                             {
@@ -399,7 +399,7 @@ namespace ExoGaitMonitorVer2
                             //MessageBox.Show("4");
                             try
                             {
-                                pvt.StartPVT(motors, "..\\..\\InputData\\接正常步的正常步迈右腿.txt", NORMAL_SPEED);
+                                pvt.StartPVT(motors, "..\\..\\InputData\\接正常步的正常步迈右腿-扩展.txt", NORMAL_SPEED);
                             }
                             catch (Exception e)
                             {
@@ -413,13 +413,13 @@ namespace ExoGaitMonitorVer2
                             //MessageBox.Show("4");
                             try
                             {
-                                pvt.StartPVT(motors, "..\\..\\InputData\\接正常步的迈右腿收步.txt", NORMAL_SPEED);
+                                pvt.StartPVT(motors, "..\\..\\InputData\\接正常步的迈右腿收步-扩展.txt", NORMAL_SPEED);
                             }
                             catch (Exception e)
                             {
                                 MessageBox.Show(e.ToString());
                             }
-                            state = 1;
+                            state = -1;
                             break;
                         #endregion
 
@@ -631,6 +631,7 @@ namespace ExoGaitMonitorVer2
                 statusInfoTextBlock.Text = "脑肌电融合控制模式";
                 bt.Content = "EEG+EMG Stop";
 
+                eeg_cm = 2;
                 main_s = true;        //EEG+EMG模式的标志符         
             }
 
