@@ -56,14 +56,14 @@ namespace ExoGaitMonitorVer2
         private int emg_cm = 0; //肌电命令：仅在外骨骼站立时且脑电命令为1时肌电可进行控制，1为走一个完整步态周期，0为不动
         private int pattern = 0; //外骨骼步态模式
         private bool main_s = false; //总开关，0为停止外骨骼，1为使能外骨骼
-        private int cnt = 0; // 进入越障步态后完成正常步的周期数
+     //   private int cnt = 0; // 进入越障步态后完成正常步的周期数
         private int obstacle_cnt = 0; // 越障个数计数器
-        private int normal_cnt = 0; // 正常循环步步数计数器
-        private const int NORMAL_MAX_CNT = 3; // 越障后正常循环步最大步数，此处跨一小步记为一步【收步不算】
+        private int normal_cnt = 0; // 步数计数器
+        private const int MAX_CNT = 12; // MAX_CNT=总步数最大值，总步数=越障前正常步数OVER_NORMAL_MAX_CN+跨障步数（4）+越障后正常步数，包含起始步和收步,
         private const int OBSTACLE_NUM = 1; // 设置越障个数
         private const int N = 0; // Demo越障前正常步步数
         private int over_normal_cnt = 0; // 越障前正常步计数器
-        private const int OVER_NORMAL_MAX_CNT = 3; // 越障前正常步最大步数 
+        private const int OVER_NORMAL_MAX_CNT = 4; // 越障前正常步最大步数，包含起始步，该值应为一个偶数 
 
         // 测试用
         private const int ENABLE = 1; // 使能外骨骼的命令
@@ -126,7 +126,7 @@ namespace ExoGaitMonitorVer2
 
         private void control()
         {
-            // 逻辑顺序： 起坐步态 --> 越障步态 --> 走停步态
+            // 逻辑顺序： 起坐步态 -->单步步态--> 接单步的连续越障步态 --> 单步走停步态
             while (true)
             {
                 // 起坐步态
@@ -135,58 +135,66 @@ namespace ExoGaitMonitorVer2
                     pattern = 1; //由坐下到直立
                 }
 
-                // 走停步态
+                // 单步走停步态
                 if (state == 1 && eeg_cm == ENABLE && pattern == 0)
                 {
-                    normal_cnt += 1;
-                    pattern = 2; //由越障并收步后到跨步，由直立状态到左腿在前的站姿
+                   // normal_cnt += 1;
+                    pattern = 2; //正常步，起始步迈左腿，由直立状态到左腿在前的站姿
                 }
-                if (state == 2 && eeg_cm == ENABLE && pattern == 0 && normal_cnt < NORMAL_MAX_CNT)
+                if (state == 2 && eeg_cm == ENABLE && pattern == 0 &&  OVER_NORMAL_MAX_CNT >= normal_cnt)
                 {
-                    normal_cnt += 1;
-                    pattern = 3; //由跨步到跨步（即走一个步态周期），由左腿在前的站姿到右腿在前的站姿
+                    //normal_cnt += 1;
+                    pattern = 3; //正常步，接起始步的正常步迈右腿，由左腿在前的站姿到右腿在前的站姿
                 }
-                if (state == 3 && eeg_cm == ENABLE && pattern == 0 && normal_cnt < NORMAL_MAX_CNT)
+                //if (state == 2 && eeg_cm == ENABLE && pattern == 0 && OVER_NORMAL_MAX_CNT< normal_cnt)
+                //{
+                //    //normal_cnt += 1;
+                //    pattern = 7;   //如果跨越前正常步步数大于设置的正常步最大值，则进入连续越障步态
+                //}
+                if (state == 3 && eeg_cm == ENABLE && pattern == 0 && OVER_NORMAL_MAX_CNT >= normal_cnt)
                 {
-                    normal_cnt += 1;
-                    pattern = 4; //由跨步到跨步（即走一个步态周期），由右腿在前的站姿到左腿在前的站姿
+                    // normal_cnt += 1;
+                    pattern = 4; //正常步，正常步迈左腿，由右腿在前的站姿到左腿在前的站姿
                 }
-                if (state == 2 && pattern == 0 && (eeg_cm == DISABLE || normal_cnt >= NORMAL_MAX_CNT))
+                if (state == 4 && eeg_cm == ENABLE && pattern == 0 && OVER_NORMAL_MAX_CNT >= normal_cnt)
                 {
-                    pattern = 5; //由跨步到停止（收步为直立状态），由右腿在前的站姿到直立状态
+                   // normal_cnt += 1;
+                    pattern = 5; //正常步，接正常步的正常步迈右腿，由左腿在前的站姿到右腿在前的站姿
                 }
-                if (state == 3 && pattern == 0 && (eeg_cm == DISABLE || normal_cnt >= NORMAL_MAX_CNT))
+                if (state == 4 && pattern == 0 && (eeg_cm == DISABLE || normal_cnt >= MAX_CNT))
                 {
-                    pattern = 6; //由跨步到跨步（即走一个步态周期），由左腿在前的站姿到直立状态
+                    pattern = 11; //正常步左脚收步，由左腿在前的站姿到直立状态
                 }
+                if (state == 5 && pattern == 0 && eeg_cm == ENABLE && OVER_NORMAL_MAX_CNT>= normal_cnt)
+                {
+                    pattern = 4; //正常步迈左腿，由右腿在前的站姿到右腿在前站姿
+                }
+                if (state == 5 && pattern == 0 && (eeg_cm == DISABLE || normal_cnt >=MAX_CNT))
+                {
+                    pattern = 10; //正常步右脚收步，由右腿在前的站姿到直立状态
+                }
+              
 
                 #region 任豪连续越障步态
-                //// 越障步态
-                //if (state == 4 && eeg_cm == ENABLE && pattern == 0)
-                //{
-                //    pattern = 7; // 由坐下到直立状态后到越障起始步迈左腿， 由直立状态到左脚在前的站姿
-                //}
-                //if (state == 5 && eeg_cm == ENABLE && pattern == 0)
-                //{
-                //    pattern = 8; // 由起始步迈左腿到正常步迈右腿， 由左脚在前的站姿到右腿在前的站姿
-                //}
-                //if (state == 6 && eeg_cm == ENABLE && pattern == 0)
-                //{
-                //    if (cnt < N)
-                //    {
-                //        pattern = 9; // 有正常步迈右腿到正常步迈左腿，由右腿在前的站姿到左腿在前的站姿
-                //    }
-                //    else
-                //    {
-                //        pattern = 11; // 有正常步迈右腿到接跨步前的正常步迈左腿，由右腿在前的站姿到左腿在前的站姿
-                //    }
+                // 越障步态
+                if (state == 5 && eeg_cm == ENABLE && pattern == 0 && OVER_NORMAL_MAX_CNT < normal_cnt)
+                {
+                    pattern = 6;    //进入接越障前的准备步态，即进入接跨步前的正常步迈左腿
+                }
+                if (state == 6 && eeg_cm == ENABLE && pattern == 0)
+                {
+                    pattern = 7; // 进入越障起始步，先迈右腿
+                }
+                if (state == 7 && eeg_cm == ENABLE && pattern == 0)
+                {
+                    pattern = 8;  //进入越障第二步
 
-                //}
-                //if (state == 7 && eeg_cm == ENABLE && pattern == 0)
-                //{
-                //    pattern = 10; // 由正常步迈左腿到正常步迈右腿， 由左脚在前的站姿到右腿在前的站姿
-                //    cnt += 1;
-                //}
+                }
+                if (state == 8 && eeg_cm == ENABLE && pattern == 0)
+                {
+                    pattern = 9; //进入越障收步
+                
+                }
                 //if (state == 8 && eeg_cm == ENABLE && pattern == 0)
                 //{
                 //    pattern = 12; // 有接跨步前的正常步迈左腿到越障并收步，由左脚在前的站姿到直立状态
@@ -194,37 +202,37 @@ namespace ExoGaitMonitorVer2
                 #endregion
 
                 #region 任豪直接越障步态【接马博正常步收步后直接进行越障】
-                if (state == 4 && eeg_cm == ENABLE && pattern == 0)
-                {
-                    over_normal_cnt += 1;
-                    pattern = 7; //由越障并收步后到跨步，由直立状态到左腿在前的站姿
-                }
-                if (state == 5 && eeg_cm == ENABLE && pattern == 0 && over_normal_cnt < OVER_NORMAL_MAX_CNT)
-                {
-                    over_normal_cnt += 1;
-                    pattern = 8; //由跨步到跨步（即走一个步态周期），由左腿在前的站姿到右腿在前的站姿
-                }
-                if (state == 6 && eeg_cm == ENABLE && pattern == 0 && over_normal_cnt < OVER_NORMAL_MAX_CNT)
-                {
-                    over_normal_cnt += 1;
-                    pattern = 9; //由跨步到跨步（即走一个步态周期），由右腿在前的站姿到左腿在前的站姿
-                }
-                if (state == 5 && pattern == 0 && (eeg_cm == ENABLE || over_normal_cnt >= OVER_NORMAL_MAX_CNT))
-                {
-                    pattern = 10; //由跨步到停止（收步为直立状态），由右腿在前的站姿到直立状态
-                }
-                if (state == 6 && pattern == 0 && (eeg_cm == ENABLE || over_normal_cnt >= OVER_NORMAL_MAX_CNT))
-                {
-                    pattern = 11; //由跨步到跨步（即走一个步态周期），由左腿在前的站姿到直立状态
-                }
-                if (state == 7 && pattern == 0 && eeg_cm == ENABLE)
-                {
-                    pattern = 12;
-                }
-                if (state == 8 && pattern == 0 && eeg_cm == ENABLE)
-                {
-                    pattern = 13;
-                }
+                //if (state == 4 && eeg_cm == ENABLE && pattern == 0)
+                //{
+                //    over_normal_cnt += 1;
+                //    pattern = 7; //由越障并收步后到跨步，由直立状态到左腿在前的站姿
+                //}
+                //if (state == 5 && eeg_cm == ENABLE && pattern == 0 && over_normal_cnt < OVER_NORMAL_MAX_CNT)
+                //{
+                //    over_normal_cnt += 1;
+                //    pattern = 8; //由跨步到跨步（即走一个步态周期），由左腿在前的站姿到右腿在前的站姿
+                //}
+                //if (state == 6 && eeg_cm == ENABLE && pattern == 0 && over_normal_cnt < OVER_NORMAL_MAX_CNT)
+                //{
+                //    over_normal_cnt += 1;
+                //    pattern = 9; //由跨步到跨步（即走一个步态周期），由右腿在前的站姿到左腿在前的站姿
+                //}
+                //if (state == 5 && pattern == 0 && (eeg_cm == ENABLE || over_normal_cnt >= OVER_NORMAL_MAX_CNT))
+                //{
+                //    pattern = 10; //由跨步到停止（收步为直立状态），由右腿在前的站姿到直立状态
+                //}
+                //if (state == 6 && pattern == 0 && (eeg_cm == ENABLE || over_normal_cnt >= OVER_NORMAL_MAX_CNT))
+                //{
+                //    pattern = 11; //由跨步到跨步（即走一个步态周期），由左腿在前的站姿到直立状态
+                //}
+                //if (state == 7 && pattern == 0 && eeg_cm == ENABLE)
+                //{
+                //    pattern = 12;
+                //}
+                //if (state == 8 && pattern == 0 && eeg_cm == ENABLE)
+                //{
+                //    pattern = 13;
+                //}
                 #endregion
 
 
@@ -255,11 +263,11 @@ namespace ExoGaitMonitorVer2
                             obstacle_cnt += 1;
                             if (obstacle_cnt > OBSTACLE_NUM)
                             {
-                                state = 1;  // 进正常循环步
+                                state = 1;  // 直立状态，准备进正常循环步
                             }
                             else
                             {
-                                state = 4; // 循环越障步态
+                                state = 4; //进入越障步态
                             }
                             break;
                         #endregion
@@ -270,13 +278,13 @@ namespace ExoGaitMonitorVer2
                             //MessageBox.Show("2");
                             try
                             {
-                                pvt.StartPVT(motors, "..\\..\\InputData\\start.txt", NORMAL_SPEED);//"..\\..\\INPUT201908051539\\左脚起始步高.txt"
+                                pvt.StartPVT(motors, "..\\..\\InputData\\起始步迈左腿.txt", NORMAL_SPEED);//"..\\..\\INPUT201908051539\\左脚起始步高.txt"
                             }
                             catch (Exception e)
                             {
                                 MessageBox.Show(e.ToString());
                             }
-                            state = 2;  //左步在前的跨步状态1
+                            state = 2;  //完成正常步起始步后，左步在前的跨步状态
                             break;
 
                         case 3:
@@ -285,13 +293,13 @@ namespace ExoGaitMonitorVer2
                             try
                             {
                                 //  walk_step += 1;
-                                pvt.StartPVT(motors, "..\\..\\InputData\\Rr=0.65a=0.25.txt", NORMAL_SPEED);
+                                pvt.StartPVT(motors, "..\\..\\InputData\\接起始步的正常步迈右腿.txt", NORMAL_SPEED);
                             }
                             catch (Exception e)
                             {
-                                MessageBox.Show(e.ToString());
+                                MessageBox.Show(e.ToString());                         
                             }
-                            state = 3;    //右步在前的跨步状态
+                            state = 3;    //正常步后，右步在前的跨步状态
                             break;
 
                         case 4:
@@ -299,148 +307,119 @@ namespace ExoGaitMonitorVer2
                             //MessageBox.Show("3");
                             try
                             {
-                                pvt.StartPVT(motors, "..\\..\\InputData\\Lr=0.65a=0.25.txt", NORMAL_SPEED);
+                                pvt.StartPVT(motors, "..\\..\\InputData\\正常步的迈左腿.txt", NORMAL_SPEED);
                             }
                             catch (Exception e)
                             {
                                 MessageBox.Show(e.ToString());
                             }
-                            state = 2; //左步在前的跨步状态2
+                            state = 4; //完成正常步后，左腿在前的跨步状态
                             break;
 
                         case 5:
-                            //由跨步到停止（收步为直立状态），，，由右腿在前的站姿到直立状态
+                            //由跨步到跨步（即走一个步态周期）
                             //MessageBox.Show("4");
                             try
                             {
-                                pvt.StartPVT(motors, "..\\..\\InputData\\Lr=1a01.15 end.txt", NORMAL_SPEED);
+                                pvt.StartPVT(motors, "..\\..\\InputData\\接正常步的正常步迈右腿.txt", NORMAL_SPEED);
                             }
                             catch (Exception e)
                             {
                                 MessageBox.Show(e.ToString());
                             }
-                            state = -1;  //直立状态
+                            state = 5;  //完成正常步后，右腿在前的状态
                             break;
 
-                        case 6:
+                        case 10:
                             //由跨步到停止（收步为直立状态），，，由左腿在前的站姿到直立状态
                             //MessageBox.Show("4");
                             try
                             {
-                                pvt.StartPVT(motors, "..\\..\\InputData\\Rr=1a=0.15 end.txt", NORMAL_SPEED);
+                                pvt.StartPVT(motors, "..\\..\\InputData\\正常步左脚收步.txt", NORMAL_SPEED);
                             }
                             catch (Exception e)
                             {
                                 MessageBox.Show(e.ToString());
                             }
-                            state = -1;
+                            state = 1;
+                            break;
+
+                        case 11:
+                            //由跨步到停止（收步为直立状态），，，由右腿在前的站姿到直立状态
+                            //MessageBox.Show("4");
+                            try
+                            {
+                                pvt.StartPVT(motors, "..\\..\\InputData\\正常步右脚收步.txt", NORMAL_SPEED);
+                            }
+                            catch (Exception e)
+                            {
+                                MessageBox.Show(e.ToString());
+                            }
+                            state = 1;
                             break;
                         #endregion
 
                         #region 越障步态
-                        case 7:
-                            //由直立到越障步态起始步
+                        case 6:
+                            //进入接越障前的准备步态，即进入接跨步前的正常步迈左腿
                             //MessageBox.Show("2");
                             try
                             {
-                                pvt.StartPVT(motors, "..\\..\\InputData\\start.txt", NORMAL_SPEED);//"..\\..\\INPUT201908051539\\左脚起始步高.txt"
+                                pvt.StartPVT(motors, "..\\..\\InputData\\接跨步前的正常步迈左腿.txt", OBSTACLE_SPEED);//"..\\..\\INPUT201908051539\\左脚起始步高.txt"
                             }
                             catch (Exception e)
                             {
                                 MessageBox.Show(e.ToString());
                             }
-                            state = 5;  //起始步迈左腿完成后左腿在前的状态
+                            state = 6;  //越障准备后的左腿在前的状态
+                            break;
+
+                        case 7:
+                            //越障步态 越障起始步
+                            //MessageBox.Show("2");
+                            try
+                            {
+                                pvt.StartPVT(motors, "..\\..\\InputData\\越障起始步.txt", OBSTACLE_SPEED);//"..\\..\\INPUT201908051539\\左脚起始步高.txt"
+                            }
+                            catch (Exception e)
+                            {
+                                MessageBox.Show(e.ToString());
+                            }
+                            state = 7;  //越障起始步迈完的右腿在前状态  右腿已迈过障碍物
+                            Thread.Sleep(5000);
                             break;
 
                         case 8:
-                            //越障步态 接起始步的正常步迈右腿
+                            //越障步态 越障第二步
                             //MessageBox.Show("2");
                             try
                             {
-                                pvt.StartPVT(motors, "..\\..\\InputData\\Rr=0.65a=0.25.txt", NORMAL_SPEED);//"..\\..\\INPUT201908051539\\左脚起始步高.txt"
+                                pvt.StartPVT(motors, "..\\..\\InputData\\越障第二步.txt", OBSTACLE_SPEED);//"..\\..\\INPUT201908051539\\左脚起始步高.txt"
                             }
                             catch (Exception e)
                             {
                                 MessageBox.Show(e.ToString());
                             }
-                            state = 6;  // 正常步迈右腿后的右腿在前状态
+                            state =8;  // 越障第二步后的左腿在前状态
+                            Thread.Sleep(3000);
                             break;
 
                         case 9:
-                            //越障步态 正常步迈左腿
+                            //越障步态 越障收步
                             //MessageBox.Show("2");
                             try
                             {
-                                pvt.StartPVT(motors, "..\\..\\InputData\\Lr=0.65a=0.25.txt", NORMAL_SPEED);//"..\\..\\INPUT201908051539\\左脚起始步高.txt"
-                            }
-                            catch (Exception e)
-                            {
-                                MessageBox.Show(e.ToString());
-                            }
-                            state = 5;  // 正常步迈左腿后的左腿在前状态
-                            break;
-
-                        case 10:
-                            //越障步态 接正常步的正常步迈右腿
-                            //MessageBox.Show("2");
-                            try
-                            {
-                                pvt.StartPVT(motors, "..\\..\\InputData\\Lr=1a01.15 end.txt", NORMAL_SPEED);//"..\\..\\INPUT201908051539\\左脚起始步高.txt"
-                            }
-                            catch (Exception e)
-                            {
-                                MessageBox.Show(e.ToString());
-                            }
-                            Thread.Sleep(5000);
-                            state = 7;  // 正常步迈右腿后的右腿在前状态
-                            break;
-
-                        case 11:
-                            //越障步态 接跨步前的正常步迈左腿
-                            //MessageBox.Show("2");
-                            try
-                            {
-                                pvt.StartPVT(motors, "..\\..\\InputData\\Rr=1a=0.15 end.txt", NORMAL_SPEED);//"..\\..\\INPUT201908051539\\左脚起始步高.txt"
-                            }
-                            catch (Exception e)
-                            {
-                                MessageBox.Show(e.ToString());
-                            }
-                            Thread.Sleep(5000);
-                            state = 8;  // 正常步迈左腿后的左腿在前并准备跨步的状态
-                            break;
-
-                        case 12:
-                            //越障步态 越障并收步（右腿先跨，）
-                            //MessageBox.Show("2");
-                            try
-                            {
-                                pvt.StartPVT(motors, "..\\..\\InputData\\直接越障步态第一步-扩展.txt", OBSTACLE_SPEED);//"..\\..\\INPUT201908051539\\左脚起始步高.txt"
+                                pvt.StartPVT(motors, "..\\..\\InputData\\越障收步.txt", OBSTACLE_SPEED);//"..\\..\\INPUT201908051539\\左脚起始步高.txt"
                             }
                             catch (Exception e)
                             {
                                 MessageBox.Show(e.ToString());
                             }
                             Thread.Sleep(3000);
-                            state = 8;
-                            break;
+                            state = 1;  //越障收步后的直立状态
 
-                        case 13:
-                            //越障步态 越障并收步（右腿先跨，）
-                            //MessageBox.Show("2");
-                            try
-                            {
-                                pvt.StartPVT(motors, "..\\..\\InputData\\直接越障步态收步-扩展.txt", OBSTACLE_SPEED);//"..\\..\\INPUT201908051539\\左脚起始步高.txt"
-                            }
-                            catch (Exception e)
-                            {
-                                MessageBox.Show(e.ToString());
-                            }
-                            over_normal_cnt = 0;
-                            state = -1;
                             break;
-
-                        #endregion
+                     #endregion
 
                         default:
                             break;
@@ -648,7 +627,7 @@ namespace ExoGaitMonitorVer2
                 statusInfoTextBlock.Text = "脑肌电融合控制模式";
                 bt.Content = "EEG+EMG Stop";
                 state = 0;
-                cnt = 0;
+               // cnt = 0;
                 obstacle_cnt = 0; // 越障个数计数器
                 normal_cnt = 0; // 正常循环步步数计数器
                 main_s = true;        //EEG+EMG模式的标志符         
@@ -884,11 +863,13 @@ namespace ExoGaitMonitorVer2
         private void positive_Button_Click(object sender, RoutedEventArgs e)
         {
             eeg_cm = 1;  //EEG上位机操作按钮 1，表示走
+            normal_cnt += 1;
         }
 
         private void negtive_Button_Click(object sender, RoutedEventArgs e)
         {
             eeg_cm = 0;  //EEG上位机操作按钮 0，表示收步
+            normal_cnt = 0; 
         }
     }
 }

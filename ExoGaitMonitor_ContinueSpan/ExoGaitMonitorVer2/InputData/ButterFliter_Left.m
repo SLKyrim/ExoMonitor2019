@@ -75,51 +75,12 @@ end
 fclose(fid);
 
 
-fid=fopen(['接跨步前的正常步迈左腿.txt'],'w');
+fid=fopen(['正常步左脚收步.txt'],'w');
 for i=401:501
     for j=1:4
         fprintf(fid,'%f\t',data(i,j));
     end
     if i == 501
-        continue;
-    else
-        fprintf(fid,'\n');
-    end 
-end
-fclose(fid);
-
-fid=fopen(['越障起始步.txt'],'w');
-for i=501:601
-    for j=1:4
-        fprintf(fid,'%f\t',data(i,j));
-    end
-    if i == r
-        continue;
-    else
-        fprintf(fid,'\n');
-    end 
-endf
-close(fid);
-
-fid=fopen(['越障第二步.txt'],'w');
-for i=601:701
-    for j=1:4
-        fprintf(fid,'%f\t',data(i,j));
-    end
-    if i == r
-        continue;
-    else
-        fprintf(fid,'\n');
-    end 
-end
-fclose(fid);
-
-fid=fopen(['越障收步.txt'],'w');
-for i=701:801
-    for j=1:4
-        fprintf(fid,'%f\t',data(i,j));
-    end
-    if i == r
         continue;
     else
         fprintf(fid,'\n');
