@@ -958,8 +958,11 @@ namespace ExoGaitMonitorVer2
 
         private void positive_Button_Click(object sender, RoutedEventArgs e)
         {
-            eeg_cm = 1;  //EEG上位机操作按钮 1，表示走
-            normal_cnt += 1;
+            if(main_s)
+            {
+              eeg_cm = 1;  //EEG上位机操作按钮 1，表示走
+              normal_cnt += 1;
+            }
         }
 
         private void negtive_Button_Click(object sender, RoutedEventArgs e)
