@@ -427,8 +427,7 @@ namespace ExoGaitMonitorVer2
                             break;
                     }
                     eeg_cm = 2;
-                    pattern = 0;
-                    Positive_Button.IsEnabled = true;
+                    pattern = 0;               
                 }
                 Thread.Sleep(100);
             }
@@ -873,7 +872,6 @@ namespace ExoGaitMonitorVer2
         {
             if (main_s)
             {
-                Positive_Button.IsEnabled = false;
                 eeg_cm = 1;  //EEG上位机操作按钮 1，表示走
             }  
         }
