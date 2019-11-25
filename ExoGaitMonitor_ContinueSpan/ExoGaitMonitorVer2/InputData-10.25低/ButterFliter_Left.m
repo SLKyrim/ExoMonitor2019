@@ -48,7 +48,7 @@ for i=101:201
 end
 fclose(fid);
 
-fid=fopen(['正常步迈左腿1.txt'],'w');
+fid=fopen(['正常步迈左腿.txt'],'w');
 for i=201:301
     for j=1:4
         fprintf(fid,'%f\t',data(i,j));
@@ -61,7 +61,7 @@ for i=201:301
 end
 fclose(fid);
 
-fid=fopen(['接正常步的正常步迈右腿.txt'],'w');
+fid=fopen(['接正常步的正常步迈右腿2.txt'],'w');
 for i=301:401
     for j=1:4
         fprintf(fid,'%f\t',data(i,j));
@@ -74,21 +74,9 @@ for i=301:401
 end
 fclose(fid);
 
-fid=fopen(['正常步迈左腿2.txt'],'w');
-for i=401:501
-    for j=1:4
-        fprintf(fid,'%f\t',data(i,j));
-    end
-    if i == 501
-        continue;
-    else
-        fprintf(fid,'\n');
-    end 
-end
-fclose(fid);
 
-fid=fopen(['正常步右腿收步.txt'],'w');
-for i=501:601
+fid=fopen(['正常步左脚收步.txt'],'w');
+for i=401:501
     for j=1:4
         fprintf(fid,'%f\t',data(i,j));
     end

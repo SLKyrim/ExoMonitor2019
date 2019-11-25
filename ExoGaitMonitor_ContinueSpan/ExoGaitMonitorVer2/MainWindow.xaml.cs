@@ -242,7 +242,7 @@ namespace ExoGaitMonitorVer2
                 {
                     pattern = 13; //正常循环步，接正常步的正常步迈右腿-扩展2
                 }
-                if (state == 14 && pattern == 0 && (eeg_cm == DISABLE || normal_cnt >= MAX_CNT))
+                if ((state == 14) && pattern == 0 && (eeg_cm == DISABLE || normal_cnt >= MAX_CNT))
                 {
                     pattern = 15; //正常循环步，接正常步的迈右腿收步-扩展2
                 }
