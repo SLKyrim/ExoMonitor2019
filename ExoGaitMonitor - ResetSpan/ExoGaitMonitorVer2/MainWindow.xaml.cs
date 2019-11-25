@@ -62,19 +62,19 @@ namespace ExoGaitMonitorVer2
         private bool is_before_normal_finish = false; // 是否准备好越障
         // 复位越障步态流程：直立 -> 
         private int obstacle_cnt = 0; // 越障个数计数器
-        private const int OBSTACLE_NUM = 1; // 设置越障个数
+        private const int OBSTACLE_NUM = 0; // 设置越障个数
         private bool is_over_finish = false; // 是否完成跨越指定个数障碍任务的标志
         // 越障后正常循环步流程：直立 -> 起始步迈左腿 -> 接起始步的正常步迈右腿 -> 正常步迈左腿 -> 【接正常步的正常步迈右腿 -> 正常步迈左腿】 -> 接正常步的迈右腿收步
         // 流程中【】内循环次数由AFTER_NORMAL_MAX_CNT设置，即即使设置为0，该流程至少也会走4步
         private int after_normal_cnt = 0; // 越障后正常步计数器
-        private const int AFTER_NORMAL_MAX_CNT = 0; // 越障后正常步最大步数 
+        private const int AFTER_NORMAL_MAX_CNT = 1; // 越障后正常步最大步数 
 
         // 测试用
         private const int ENABLE = 1; // 使能外骨骼的命令
         private const int DISABLE = 0; // 失能外骨骼的命令
         private const int RENHAO_V = 10; // 越障步态速度
-        private const int OBSTACLE_SPEED = 12; // 跨越那一步的速度
-        private const int NORMAL_SPEED = 10; // 正常循环步速度
+        private const int OBSTACLE_SPEED = 11; // 跨越那一步的速度
+        private const int NORMAL_SPEED = 8; // 正常循环步速度
 
         #endregion
 
