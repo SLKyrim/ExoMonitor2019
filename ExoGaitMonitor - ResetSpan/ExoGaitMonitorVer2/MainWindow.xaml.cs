@@ -73,8 +73,8 @@ namespace ExoGaitMonitorVer2
         private const int ENABLE = 1; // 使能外骨骼的命令
         private const int DISABLE = 0; // 失能外骨骼的命令
         private const int RENHAO_V = 10; // 越障步态速度
-        private const int OBSTACLE_SPEED = 15; // 跨越那一步的速度
-        private const int NORMAL_SPEED = 13; // 正常循环步速度
+        private const int OBSTACLE_SPEED = 12; // 跨越那一步的速度
+        private const int NORMAL_SPEED = 10; // 正常循环步速度
 
         #endregion
 
