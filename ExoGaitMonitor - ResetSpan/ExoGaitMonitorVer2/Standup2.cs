@@ -474,9 +474,9 @@ namespace ExoGaitMonitorVer2
         // 膝关节直立前，髋关节保持前倾25°（如下倒数第2行）
         // 最后髋关节再伸直
         double[,] KeyPos = { { 100, -90, 90, -100 },
-                             {102,-110,110,-102},
-                             { 102,-117,117,-102},
-                             { 94,-112,112,-94},
+                             {102,-151,151,-102},
+                             { 102,-183,183,-102},
+                             { 94,-135,135,-94},
                              { 71,-90,90,-71 },
                              {56,-84,84,-56 },
                              { 43,-61,61,-43},
@@ -508,9 +508,9 @@ namespace ExoGaitMonitorVer2
         //double MotorAcceleration = 200; // 电机加速度(越大越快)
         //double MotorDeceleration = 200; // 电机减速度(越大越快)
 
-        double MotorVelocity = 550; // 电机速度(越大越快)
-        double MotorAcceleration = 300; // 电机加速度(越大越快)
-        double MotorDeceleration = 300; // 电机减速度(越大越快)
+        double MotorVelocity = 700; // 电机速度(越大越快)
+        double MotorAcceleration = 450; // 电机加速度(越大越快)
+        double MotorDeceleration = 450; // 电机减速度(越大越快)
         // 求取从初始位置到第一个位置的电机转角变化量的绝对值
 
         public void start_Standup2(Motors motor) // 站立，原理同坐下

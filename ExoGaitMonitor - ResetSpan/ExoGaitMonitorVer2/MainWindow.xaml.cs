@@ -202,6 +202,7 @@ namespace ExoGaitMonitorVer2
                             //由坐下到直立
                             //MessageBox.Show("1");
                             double positon = motors.ampObjAngleActual[3];
+                            ComWinTextBox.Dispatcher.Invoke(new showData(ComWinTextBox.AppendText), "直立状态\n");
                             if (Math.Abs(positon) > 60)
                             {
                                 try
@@ -240,6 +241,7 @@ namespace ExoGaitMonitorVer2
                         case 2:
                             //由直立到跨步
                             //MessageBox.Show("2");
+                            ComWinTextBox.Dispatcher.Invoke(new showData(ComWinTextBox.AppendText), "越障前 - 起始步迈左腿\n");
                             try
                             {
                                 pvt.StartPVT(motors, "..\\..\\InputData\\起始步迈左腿-扩展.txt", NORMAL_SPEED);
@@ -253,6 +255,7 @@ namespace ExoGaitMonitorVer2
 
                         case 3:
                             //MessageBox.Show("3");
+                            ComWinTextBox.Dispatcher.Invoke(new showData(ComWinTextBox.AppendText), "越障前 - 接起始步的正常步迈右腿\n");
                             try
                             {
                                 pvt.StartPVT(motors, "..\\..\\InputData\\接起始步的正常步迈右腿-扩展.txt", NORMAL_SPEED);
@@ -267,6 +270,7 @@ namespace ExoGaitMonitorVer2
                         case 4:
                             //由跨步到跨步（即走一个步态周期）
                             //MessageBox.Show("3");
+                            ComWinTextBox.Dispatcher.Invoke(new showData(ComWinTextBox.AppendText), "越障前 - 正常步迈左腿\n");
                             try
                             {
                                 pvt.StartPVT(motors, "..\\..\\InputData\\正常步迈左腿-扩展.txt", NORMAL_SPEED);
@@ -287,6 +291,7 @@ namespace ExoGaitMonitorVer2
 
                         case 5:
                             //MessageBox.Show("4");
+                            ComWinTextBox.Dispatcher.Invoke(new showData(ComWinTextBox.AppendText), "越障前 - 接正常步的正常步迈右腿\n");
                             try
                             {
                                 pvt.StartPVT(motors, "..\\..\\InputData\\接正常步的正常步迈右腿-扩展.txt", NORMAL_SPEED);
@@ -300,6 +305,7 @@ namespace ExoGaitMonitorVer2
                             break;
 
                         case 6:
+                            ComWinTextBox.Dispatcher.Invoke(new showData(ComWinTextBox.AppendText), "越障前 - 接正常步的迈右腿收步\n");
                             //MessageBox.Show("4");
                             try
                             {
@@ -318,6 +324,7 @@ namespace ExoGaitMonitorVer2
                         case 7:
                             //由直立到越障步态起始步
                             //MessageBox.Show("2");
+                            ComWinTextBox.Dispatcher.Invoke(new showData(ComWinTextBox.AppendText), "直接越障步态第一步\n");
                             try
                             {
                                 pvt.StartPVT(motors, "..\\..\\InputData\\直接越障步态第一步-扩展.txt", OBSTACLE_SPEED);
@@ -332,6 +339,7 @@ namespace ExoGaitMonitorVer2
                         case 8:
                             //越障步态 接起始步的正常步迈右腿
                             //MessageBox.Show("2");
+                            ComWinTextBox.Dispatcher.Invoke(new showData(ComWinTextBox.AppendText), "直接越障步态收步\n");
                             try
                             {
                                 pvt.StartPVT(motors, "..\\..\\InputData\\直接越障步态收步-扩展.txt", OBSTACLE_SPEED);
@@ -350,6 +358,7 @@ namespace ExoGaitMonitorVer2
                         case 9:
                             //由直立到跨步
                             //MessageBox.Show("2");
+                            ComWinTextBox.Dispatcher.Invoke(new showData(ComWinTextBox.AppendText), "越障后 - 起始步迈左腿\n");
                             try
                             {
                                 pvt.StartPVT(motors, "..\\..\\InputData\\起始步迈左腿-扩展.txt", NORMAL_SPEED);
@@ -363,6 +372,7 @@ namespace ExoGaitMonitorVer2
 
                         case 10:
                             //MessageBox.Show("3");
+                            ComWinTextBox.Dispatcher.Invoke(new showData(ComWinTextBox.AppendText), "越障后 - 接起始步的正常步迈右腿\n");
                             try
                             {
                                 pvt.StartPVT(motors, "..\\..\\InputData\\接起始步的正常步迈右腿-扩展.txt", NORMAL_SPEED);
@@ -377,6 +387,7 @@ namespace ExoGaitMonitorVer2
                         case 11:
                             //由跨步到跨步（即走一个步态周期）
                             //MessageBox.Show("3");
+                            ComWinTextBox.Dispatcher.Invoke(new showData(ComWinTextBox.AppendText), "越障后 - 正常步迈左腿\n");
                             try
                             {
                                 pvt.StartPVT(motors, "..\\..\\InputData\\正常步迈左腿-扩展.txt", NORMAL_SPEED);
@@ -397,6 +408,7 @@ namespace ExoGaitMonitorVer2
 
                         case 12:
                             //MessageBox.Show("4");
+                            ComWinTextBox.Dispatcher.Invoke(new showData(ComWinTextBox.AppendText), "越障后 - 接正常步的正常步迈右腿\n");
                             try
                             {
                                 pvt.StartPVT(motors, "..\\..\\InputData\\接正常步的正常步迈右腿-扩展.txt", NORMAL_SPEED);
@@ -411,6 +423,7 @@ namespace ExoGaitMonitorVer2
 
                         case 13:
                             //MessageBox.Show("4");
+                            ComWinTextBox.Dispatcher.Invoke(new showData(ComWinTextBox.AppendText), "越障后 - 接正常步的迈右腿收步\n");
                             try
                             {
                                 pvt.StartPVT(motors, "..\\..\\InputData\\接正常步的迈右腿收步-扩展.txt", NORMAL_SPEED);
@@ -514,7 +527,7 @@ namespace ExoGaitMonitorVer2
                 bt.Content = "Stop";
                 if (positon < 10)
                 {
-                    pvt.StartPVT(motors, "..\\..\\InputData\\6步新.txt", 20);
+                    pvt.StartPVT(motors, "..\\..\\InputData\\6步新.txt", 25);
                 }
 
             }
@@ -538,6 +551,7 @@ namespace ExoGaitMonitorVer2
             double positon = motors.ampObjAngleActual[3];
             if (bt.Content.ToString() == "Sit Down")
             {
+                ComWinTextBox.Dispatcher.Invoke(new showData(ComWinTextBox.AppendText), "坐下\n");
                 PVT_Button.IsEnabled = false;
                 Stand_up_Button.IsEnabled = false;
                 angleSetButton.IsEnabled = false;
@@ -580,6 +594,7 @@ namespace ExoGaitMonitorVer2
             double positon = motors.ampObjAngleActual[3];
             if (bt.Content.ToString() == "Stand Up")
             {
+                ComWinTextBox.Dispatcher.Invoke(new showData(ComWinTextBox.AppendText), "起立\n");
                 PVT_Button.IsEnabled = false;
                 angleSetButton.IsEnabled = false;
                 Sit_button.IsEnabled = false;
@@ -845,6 +860,7 @@ namespace ExoGaitMonitorVer2
         #region 电机状态
         private void Disable_Click(object sender, RoutedEventArgs e)//点击【Disable】按钮时执行：失能电机
         {
+            ComWinTextBox.Dispatcher.Invoke(new showData(ComWinTextBox.AppendText), "电机Disable\n");
             motors.ampObj[0].Disable();
             motors.ampObj[1].Disable();
             motors.ampObj[2].Disable();
@@ -853,6 +869,7 @@ namespace ExoGaitMonitorVer2
 
         private void Enable_Click(object sender, RoutedEventArgs e)//点击【Enable】按钮时执行：使能电机
         {
+            ComWinTextBox.Dispatcher.Invoke(new showData(ComWinTextBox.AppendText), "电机Enable\n");
             motors.ampObj[0].Enable();
             motors.ampObj[1].Enable();
             motors.ampObj[2].Enable();
