@@ -36,7 +36,7 @@
                                         <ColumnDefinition Width="10*"/>
                                     </Grid.ColumnDefinitions>
                                     <TextBlock x:Name="textBlock" VerticalAlignment="Center" Grid.Column="0" Height="23" TextWrapping="Wrap" Margin="5,10,5,0" Text="IP地址"/>
-                                    <TextBox x:Name="IPAdressTextBox" Grid.Column="1" Height="23" TextWrapping="Wrap" Text="192.168.1.101" VerticalAlignment="Center" Margin="5,10,5,0" Width="100"/>
+                                    <TextBox x:Name="IPAdressTextBox" Grid.Column="1" Height="23" TextWrapping="Wrap" Text="192.168.1.110" VerticalAlignment="Center" Margin="5,10,5,0" Width="100"/>
                                 </Grid>
                             </DockPanel>
 
@@ -113,9 +113,9 @@
                                         <Grid DockPanel.Dock="Top" Width="200">
                                             <StackPanel Margin="0">
                                                 <TextBlock Foreground="#FF0078D7" FontSize="16" Padding="5"><Run Text="电机描述："/></TextBlock>
-                                                <TextBlock Padding="5"><Run Text="电机1左膝，向后弯曲角为负"/></TextBlock>
+                                                <TextBlock Padding="5"><Run Text="电机1左膝，向后弯曲角为正"/></TextBlock>
                                                 <TextBlock Padding="5"><Run Text="电机2左髋，向后弯曲角为负"/></TextBlock>
-                                                <TextBlock Padding="5"><Run Text="电机3右髋，向后弯曲角为正"/></TextBlock>
+                                                <TextBlock Padding="5"><Run Text="电机3右髋，向后弯曲角为负"/></TextBlock>
                                                 <TextBlock Padding="5"><Run Text="电机4右膝，向后弯曲角为正"/></TextBlock>
                                             </StackPanel>
                                         </Grid>
@@ -128,7 +128,9 @@
                                             <Button x:Name="PVT_Button" Content="PVT Mode" Margin="3" Padding="3" Click="PVT_Button_Click"/>
                                             <Button x:Name="Sit_button" Content="Sit Down" Margin="3" Padding="3" Click="Sit_button_Click"/>
                                             <Button x:Name="Stand_up_Button" Content="Stand Up" Margin="3" Padding="3" Click="Stand_up_Button_Click"/>
+                                            <Button x:Name="SStand_up_Button" Content="Stand Up2" Margin="3" Padding="3" Click="SStand_up_Button_Click"/>
                                             <Button x:Name="EEG_EMG_Button" Content="EEG+EMG Start" Margin="3" Padding="3" Click="EEG_EMG_Button_Click"/>
+                                            
                                         </StackPanel>
                                     </DockPanel>
                                 </GroupBox>
