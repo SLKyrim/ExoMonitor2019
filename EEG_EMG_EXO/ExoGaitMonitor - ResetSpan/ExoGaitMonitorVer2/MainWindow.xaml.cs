@@ -58,12 +58,12 @@ namespace ExoGaitMonitorVer2
         // 正常循环步流程：直立 -> 起始步迈左腿 -> 接起始步的正常步迈右腿 -> 正常步迈左腿 -> 【接正常步的正常步迈右腿 -> 正常步迈左腿】 -> 接正常步的迈右腿收步\迈左腿收步
   
 
-        // 测试用
+        // 测试用 
         private const int ENABLE = 1; // 使能外骨骼的命令
         private const int DISABLE = 0; // 失能外骨骼的命令
         private const int RENHAO_V = 10; // 越障步态速度
-        private const int OBSTACLE_SPEED = 11; // 跨越那一步的速度
-        private const int NORMAL_SPEED = 8; // 正常循环步速度
+        private const int OBSTACLE_SPEED = 12; // 跨越那一步的速度
+        private const int NORMAL_SPEED = 9; // 正常循环步速度
 
         #endregion
 
@@ -119,19 +119,19 @@ namespace ExoGaitMonitorVer2
 
         private void control()
         {
-            // 逻辑顺序： 起坐步态 --> 越障前正常循环步 --> 复位越障步态 --> 越障后正常循环步
+            // 逻辑顺序： 起坐步态 --> 正常循环步 --> 复位越障步态
             while (true)
             {
                 // 起坐步态
-                if (state == 1 && emg_cm == ENABLE && pattern == 0)  //为坐立状态，且emg=1时，执行起立
+                if (state == 1 && pattern == 0)  //  && emg_cm == ENABLE 为坐立状态，且emg=1时，执行起立  
                 {
                     pattern = 1; //由坐下到直立
                 }
 
-                // 越障前正常循环步
+                // 正常循环步
                 if (state == 2 && eeg_cm == ENABLE && pattern == 0 && emg_cm == 0)  //若满足 直立状态，脑电为行走命令，肌电为0状态
                 {
-                    pattern = 2; //由越障并收步后到跨步，由直立状态到左腿在前的站姿
+                    pattern = 2; //起始步，由直立状态到左腿在前的站姿
                 }
                 if (state == 3 && eeg_cm == ENABLE && pattern == 0 && emg_cm == 0)  //若满足 起始步完成后左腿在前的状态，脑电为行走命令，肌电为0状态
                 {
@@ -147,15 +147,15 @@ namespace ExoGaitMonitorVer2
                 }
                 if (state == 4 && eeg_cm == DISABLE && pattern == 0 && emg_cm == 0)  //若满足 正常步右腿在前的状态，脑电为收步命令，肌电为0状态
                 {
-                    pattern = 6; //接正常步的正常步迈右腿收步
+                    pattern = 6; //接正常步的正常步迈左腿收步
                 }
                 if (state == 5 && eeg_cm == DISABLE && pattern == 0 && emg_cm == 0)  //若满足 正常步左腿在前的状态，脑电为收步命令，肌电为0状态
                 {
-                    pattern = 7; //接正常步的正常步迈左腿收步
+                    pattern = 7; //接正常步的正常步迈右腿收步
                 }
 
                 // 复位越障步态
-                if (state == 8 && eeg_cm == ENABLE && pattern == 0 && emg_cm == 2)  //若满足 直立状态，脑电为行走命令，肌电为2状态
+                if (state == 2 && eeg_cm == ENABLE && pattern == 0 && emg_cm == 2)  //若满足 直立状态，脑电为行走命令，肌电为2状态
                 {
                     pattern = 8; //直接越障并收步
                 }
@@ -246,10 +246,10 @@ namespace ExoGaitMonitorVer2
 
                         case 6:
                             //MessageBox.Show("6");
-                            ComWinTextBox.Dispatcher.Invoke(new showData(ComWinTextBox.AppendText), "接正常步的迈右腿收步\n");                           
+                            ComWinTextBox.Dispatcher.Invoke(new showData(ComWinTextBox.AppendText), "接正常步的迈左腿收步\n");                           
                             try
                             {
-                                pvt.StartPVT(motors, "..\\..\\InputData\\接正常步的迈右腿收步-扩展.txt", NORMAL_SPEED);
+                                pvt.StartPVT(motors, "..\\..\\InputData\\接正常步的迈左腿收步-扩展.txt", NORMAL_SPEED);
                             }
                             catch (Exception e)
                             {
@@ -259,10 +259,10 @@ namespace ExoGaitMonitorVer2
                             break;
                         case 7:
                             //MessageBox.Show("7");
-                            ComWinTextBox.Dispatcher.Invoke(new showData(ComWinTextBox.AppendText), "接正常步的迈左腿收步\n");
+                            ComWinTextBox.Dispatcher.Invoke(new showData(ComWinTextBox.AppendText), "接正常步的迈右腿收步\n");
                             try
                             {
-                                pvt.StartPVT(motors, "..\\..\\InputData\\接正常步的迈左腿收步-扩展.txt", NORMAL_SPEED);
+                                pvt.StartPVT(motors, "..\\..\\InputData\\接正常步的迈右腿收步-扩展.txt", NORMAL_SPEED);
                             }
                             catch (Exception e)
                             {
@@ -285,7 +285,7 @@ namespace ExoGaitMonitorVer2
                             {
                                 MessageBox.Show(e.ToString());
                             }
-                            state = 1;  //跨障碍物完成，并恢复到直立状态
+                            state = 2;  //跨障碍物完成，并恢复到直立状态
                             break;
 
 
@@ -758,7 +758,7 @@ namespace ExoGaitMonitorVer2
         {
             if (main_s)
             {
-                emg_cm = 1;  //EEG上位机操作按钮 1，表示走
+                emg_cm = 1;  //Emg上位机操作按钮 1，表示起立
             }
         }
 
@@ -766,7 +766,8 @@ namespace ExoGaitMonitorVer2
         {
             if (main_s)
             {
-                emg_cm = 2;  //EEG上位机操作按钮 1，表示走
+                eeg_cm = 1;  //EEG上位机操作按钮 1，表示走
+                emg_cm = 2;  //EMG上位机操作按钮2，表示跨大步
             }
         }
     }
