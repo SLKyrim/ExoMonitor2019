@@ -52,7 +52,11 @@ namespace ExoGaitMonitorVer2
         // 控制逻辑
 <<<<<<< HEAD:EEG_EMG_EXO/ExoGaitMonitor - EEG_EMG_ResetSpan/ExoGaitMonitorVer2/MainWindow.xaml.cs
 <<<<<<< HEAD:EEG_EMG_EXO/ExoGaitMonitor - EEG_EMG_ResetSpan/ExoGaitMonitorVer2/MainWindow.xaml.cs
+<<<<<<< HEAD:EEG_EMG_EXO/ExoGaitMonitor - EEG_EMG_ResetSpan/ExoGaitMonitorVer2/MainWindow.xaml.cs
         private int state = 2; //外骨骼当前状态，2为直立状态
+=======
+        private int state = 1; //外骨骼当前状态
+>>>>>>> parent of d0c6ac0... 成功拍摄版本：锁住脑电，持续约三秒检测肌电是否动作:EEG_EMG_EXO/ExoGaitMonitor - ResetSpan/ExoGaitMonitorVer2/MainWindow.xaml.cs
 =======
         private int state = 1; //外骨骼当前状态
 >>>>>>> parent of d0c6ac0... 成功拍摄版本：锁住脑电，持续约三秒检测肌电是否动作:EEG_EMG_EXO/ExoGaitMonitor - ResetSpan/ExoGaitMonitorVer2/MainWindow.xaml.cs
@@ -132,6 +136,7 @@ namespace ExoGaitMonitorVer2
             {
 <<<<<<< HEAD:EEG_EMG_EXO/ExoGaitMonitor - EEG_EMG_ResetSpan/ExoGaitMonitorVer2/MainWindow.xaml.cs
 <<<<<<< HEAD:EEG_EMG_EXO/ExoGaitMonitor - EEG_EMG_ResetSpan/ExoGaitMonitorVer2/MainWindow.xaml.cs
+<<<<<<< HEAD:EEG_EMG_EXO/ExoGaitMonitor - EEG_EMG_ResetSpan/ExoGaitMonitorVer2/MainWindow.xaml.cs
                 if (eeg_cm == 1)
                 {
                     int i = 0,j = 0;
@@ -160,6 +165,8 @@ namespace ExoGaitMonitorVer2
                     }
                         
                 }
+=======
+>>>>>>> parent of d0c6ac0... 成功拍摄版本：锁住脑电，持续约三秒检测肌电是否动作:EEG_EMG_EXO/ExoGaitMonitor - ResetSpan/ExoGaitMonitorVer2/MainWindow.xaml.cs
 =======
 >>>>>>> parent of d0c6ac0... 成功拍摄版本：锁住脑电，持续约三秒检测肌电是否动作:EEG_EMG_EXO/ExoGaitMonitor - ResetSpan/ExoGaitMonitorVer2/MainWindow.xaml.cs
 =======
