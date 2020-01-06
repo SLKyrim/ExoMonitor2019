@@ -143,19 +143,30 @@
                                     </DockPanel>
                                 </GroupBox>
 
-                                <GroupBox Header="EEG-EMG调试" Margin="1" BorderThickness="{Binding BorderThickness, ElementName=ParaDispPanel}" BorderBrush="{Binding BorderBrush, ElementName=ParaDispPanel}" Height=" 84">
+                                <GroupBox Header="EEG-EMG调试" Margin="1" BorderThickness="{Binding BorderThickness, ElementName=ParaDispPanel}" BorderBrush="{Binding BorderBrush, ElementName=ParaDispPanel}" Height="131">
 
                                     <Grid Margin="2,2,0,0" DockPanel.Dock="Top">
                                         <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="6*"/>
-                                        <ColumnDefinition Width="8*"/>
-                                    </Grid.ColumnDefinitions>
-                                        <Button x:Name="EEG_positive_Button" Grid.Column="0" Margin="8,-25,-6,2" Height="22" Click="EEG_positive_Button_Click" Content="EegWalk"/>
-                                        <Button x:Name="EEG_negtive_Button" Grid.Column="1" Margin="9,-25,12,2" Height="22" Click="EEG_negtive_Button_Click" Content="EegStop"/>
-                                        <Button x:Name="EMG_1Button" Grid.Column="0" Margin="8,5,-6,-22" Height="23" Padding="3" Click="EMG_1Button_Click" Content="EmgStandup"/>
-                                        <Button x:Name="EMG_2Button" Grid.Column="1" Margin="9,5,12,-22" Height="23" Padding="3" Click="EMG_2Button_Click" Content="EmgBigstep"/>
-                                </Grid>
-                                    
+                                            <ColumnDefinition Width="11*"/>
+                                            <ColumnDefinition Width="74*"/>
+                                            <ColumnDefinition Width="114*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Button x:Name="EEG_positive_Button" Grid.Column="0" Margin="8,11,111,73.8" Height="22" Click="EEG_positive_Button_Click" Content="EegWalk" Grid.ColumnSpan="3"/>
+                                        <Button x:Name="EEG_negtive_Button" Grid.Column="2" Margin="58.667,11,18,73.8" Height="22" Click="EEG_negtive_Button_Click" Content="EegStop"/>
+                                        <Button x:Name="EMG_1Button" Grid.Column="0" Margin="10,45,111,38.8" Height="22" Padding="2" Click="EMG_1Button_Click" Content="EmgWalk" Grid.ColumnSpan="3"/>
+                                        <Button x:Name="EMG_2Button" Grid.Column="2" Margin="58.4,45,18,38.8" Height="22" Padding="2" Click="EMG_2Button_Click" Content="EmgBigstep"/>
+                                        <Button x:Name="EMG_0Button" Grid.Column="0" Margin="10,77,18,4.8" Height="22" Padding="2" Click="EMG_0Button_Click" Content="EmgStatic" Grid.ColumnSpan="3" RenderTransformOrigin="0.5,0.5">
+                                            <Button.RenderTransform>
+                                                <TransformGroup>
+                                                    <ScaleTransform/>
+                                                    <SkewTransform AngleY="-0.303"/>
+                                                    <RotateTransform/>
+                                                    <TranslateTransform Y="-0.261"/>
+                                                </TransformGroup>
+                                            </Button.RenderTransform>
+                                        </Button>
+                                    </Grid>
+
                                 </GroupBox>
 
 
