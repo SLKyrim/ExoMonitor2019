@@ -50,7 +50,7 @@ namespace ExoGaitMonitorVer2
         //private int LongGiatTime = 85;
 
         // 控制逻辑
-        private int state = 2; //外骨骼当前状态
+        private int state = 2; //外骨骼当前状态，2为直立状态
         private int eeg_cm = 2; //脑电命令：1为行走（正常走和跨障碍物），0为收步
         private int emg_cm = 0; //肌电命令：0为正常行走，1为执行起立，2为跨障碍物
         private int pattern = 0; //外骨骼步态模式，非0时触发外骨骼执行对应步态
@@ -138,7 +138,7 @@ namespace ExoGaitMonitorVer2
                                 break;
                             }
                         }
-                        if (emg_cm != 0)
+                        if (emg_cm != 0) //为了跳出i循环
                             break;
                     }
                     //Console.WriteLine("等待完成");
@@ -776,7 +776,7 @@ namespace ExoGaitMonitorVer2
 
         private void EEG_positive_Button_Click(object sender, RoutedEventArgs e)
         {
-            if (main_s)
+            if (main_s)      //只有EEG_EMG_Start开启，这个按键才会启用
             {
                 eeg_cm = 1;  //EEG上位机操作按钮 1，表示走
             }  
