@@ -50,7 +50,11 @@ namespace ExoGaitMonitorVer2
         //private int LongGiatTime = 85;
 
         // 控制逻辑
+<<<<<<< HEAD:EEG_EMG_EXO/ExoGaitMonitor - EEG_EMG_ResetSpan/ExoGaitMonitorVer2/MainWindow.xaml.cs
         private int state = 2; //外骨骼当前状态，2为直立状态
+=======
+        private int state = 1; //外骨骼当前状态
+>>>>>>> parent of d0c6ac0... 成功拍摄版本：锁住脑电，持续约三秒检测肌电是否动作:EEG_EMG_EXO/ExoGaitMonitor - ResetSpan/ExoGaitMonitorVer2/MainWindow.xaml.cs
         private int eeg_cm = 2; //脑电命令：1为行走（正常走和跨障碍物），0为收步
         private int emg_cm = 0; //肌电命令：0为正常行走，1为执行起立，2为跨障碍物
         private int pattern = 0; //外骨骼步态模式，非0时触发外骨骼执行对应步态
@@ -122,6 +126,7 @@ namespace ExoGaitMonitorVer2
             // 逻辑顺序： 起坐步态 --> 正常循环步 --> 复位越障步态
             while (true)
             {
+<<<<<<< HEAD:EEG_EMG_EXO/ExoGaitMonitor - EEG_EMG_ResetSpan/ExoGaitMonitorVer2/MainWindow.xaml.cs
                 if (eeg_cm == 1)
                 {
                     int i = 0,j = 0;
@@ -150,6 +155,8 @@ namespace ExoGaitMonitorVer2
                     }
                         
                 }
+=======
+>>>>>>> parent of d0c6ac0... 成功拍摄版本：锁住脑电，持续约三秒检测肌电是否动作:EEG_EMG_EXO/ExoGaitMonitor - ResetSpan/ExoGaitMonitorVer2/MainWindow.xaml.cs
                 // 起坐步态
                 if (state == 1 && pattern == 0)  //  && emg_cm == ENABLE 为坐立状态，且emg=1时，执行起立  
                 {
@@ -157,27 +164,27 @@ namespace ExoGaitMonitorVer2
                 }
 
                 // 正常循环步
-                if (state == 2 && eeg_cm == ENABLE && pattern == 0 && emg_cm == 1)  //若满足 直立状态，脑电为行走命令，肌电为0状态
+                if (state == 2 && eeg_cm == ENABLE && pattern == 0 && emg_cm == 0)  //若满足 直立状态，脑电为行走命令，肌电为0状态
                 {
                     pattern = 2; //起始步，由直立状态到左腿在前的站姿
                 }
-                if (state == 3 && eeg_cm == ENABLE && pattern == 0 && emg_cm == 1)  //若满足 起始步完成后左腿在前的状态，脑电为行走命令，肌电为0状态
+                if (state == 3 && eeg_cm == ENABLE && pattern == 0 && emg_cm == 0)  //若满足 起始步完成后左腿在前的状态，脑电为行走命令，肌电为0状态
                 {
                     pattern = 3; //接起始步迈左腿的正常步迈右腿
                 }
-                if (state == 4 && eeg_cm == ENABLE && pattern == 0 && emg_cm == 1)  //若满足 正常步右腿在前的状态，脑电为行走命令，肌电为0状态
+                if (state == 4 && eeg_cm == ENABLE && pattern == 0 && emg_cm == 0)  //若满足 正常步右腿在前的状态，脑电为行走命令，肌电为0状态
                 {
                     pattern = 4; //正常步迈左腿
                 }
-                if (state == 5 && eeg_cm == ENABLE && pattern == 0 && emg_cm == 1)  //若满足 正常步左腿在前的状态，脑电为行走命令，肌电为0状态
+                if (state == 5 && eeg_cm == ENABLE && pattern == 0 && emg_cm == 0)  //若满足 正常步左腿在前的状态，脑电为行走命令，肌电为0状态
                 {
                     pattern = 5; //接正常步的正常步迈右腿
                 }
-                if (state == 4 && eeg_cm == DISABLE && pattern == 0) // && emg_cm == 0)  //若满足 正常步右腿在前的状态，脑电为收步命令，肌电为0状态
+                if (state == 4 && eeg_cm == DISABLE && pattern == 0 && emg_cm == 0)  //若满足 正常步右腿在前的状态，脑电为收步命令，肌电为0状态
                 {
                     pattern = 6; //接正常步的正常步迈左腿收步
                 }
-                if (state == 5 && eeg_cm == DISABLE && pattern == 0) // && emg_cm == 0)  //若满足 正常步左腿在前的状态，脑电为收步命令，肌电为0状态
+                if (state == 5 && eeg_cm == DISABLE && pattern == 0 && emg_cm == 0)  //若满足 正常步左腿在前的状态，脑电为收步命令，肌电为0状态
                 {
                     pattern = 7; //接正常步的正常步迈右腿收步
                 }
@@ -322,10 +329,10 @@ namespace ExoGaitMonitorVer2
                         default:
                             break;
                     }
-                    eeg_cm = 2;  // 选一个不会执行任何动作的状态                    
+                    eeg_cm = 2;  // 选一个不会执行任何动作的状态
+                    emg_cm = 0; // 恢复到肌电行走状态
                     pattern = 0;               
                 }
-                emg_cm = 0; // 恢复到肌电静止状态
                 Thread.Sleep(100);
             }
         }
@@ -529,8 +536,6 @@ namespace ExoGaitMonitorVer2
             {
                 angleSetButton.IsEnabled = false;
                 getZeroPointButton.IsEnabled = false;
-                Sit_button.IsEnabled = false;
-                Stand_up_Button.IsEnabled = false;
 
                 statusBar.Background = new SolidColorBrush(Color.FromArgb(255, 230, 20, 20));
                 statusInfoTextBlock.Text = "脑肌电融合控制模式";
@@ -548,8 +553,6 @@ namespace ExoGaitMonitorVer2
                 state = 1;
                 angleSetButton.IsEnabled = true;
                 getZeroPointButton.IsEnabled = true;
-                Sit_button.IsEnabled = true;
-                Stand_up_Button.IsEnabled = true;
 
                 motors.Linkage.HaltMove();
 
@@ -665,7 +668,6 @@ namespace ExoGaitMonitorVer2
                     ComWinTextBox.Dispatcher.Invoke(new showData(ComWinTextBox.AppendText), "\n脑电客户端传来信息：" + Encoding.Default.GetString(buffer, 0, msgSize));
                     string eeg = Encoding.Default.GetString(buffer, 0, msgSize);
                     eeg_cm = Convert.ToInt16(eeg); //脑电传来的命令
-                   
 
                 }
                 catch
@@ -787,13 +789,6 @@ namespace ExoGaitMonitorVer2
             eeg_cm = 0;  //EEG上位机操作按钮 0，表示收步
         }
 
-        private void EMG_0Button_Click(object sender, RoutedEventArgs e)
-        {
-            if (main_s)
-            {
-                emg_cm = 0;  //Emg上位机操作按钮 1，表示起立
-            }
-        }
         private void EMG_1Button_Click(object sender, RoutedEventArgs e)
         {
             if (main_s)
@@ -806,7 +801,7 @@ namespace ExoGaitMonitorVer2
         {
             if (main_s)
             {
-               // eeg_cm = 1;  //EEG上位机操作按钮 1，表示走
+                eeg_cm = 1;  //EEG上位机操作按钮 1，表示走
                 emg_cm = 2;  //EMG上位机操作按钮2，表示跨大步
             }
         }
