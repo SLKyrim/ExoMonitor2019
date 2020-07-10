@@ -892,7 +892,7 @@ namespace ExoGaitMonitorVer2
 
                 double[] AngVel = { motors.ampObjAngleActual[0], motors.ampObjAngleActual[1], motors.ampObjAngleActual[2], motors.ampObjAngleActual[3],
                                     motors.ampObjAngleVelActual[0], motors.ampObjAngleVelActual[1],motors.ampObjAngleVelActual[2], motors.ampObjAngleVelActual[3]};
-                outputSensor(AngVel[0], AngVel[1], AngVel[2], AngVel[3], AngVel[4], AngVel[5], AngVel[6], AngVel[7]);  //保存实时数据
+                
 
 
                 int PulseWidthF = 500;
@@ -911,6 +911,8 @@ namespace ExoGaitMonitorVer2
 
                 if (eeg_cm == 1)  //Fatigue Feedback
                     PulseFreF = 15;
+
+                outputSensor(AngVel[0], AngVel[1], AngVel[2], AngVel[3], AngVel[4], AngVel[5], AngVel[6], AngVel[7], PulseFreF, PulseWidthFL, PulseWidthFR);  //保存实时数据
 
                 TwoChannel(PulseWidthFL, PulseWidthFR, PulseCurrentF, PulseFreF);
                 //SingleChannel(0, PulseWidthF, PulseCurrentFL, PulseFreF);
@@ -987,12 +989,12 @@ namespace ExoGaitMonitorVer2
             }
         }
 
-        public void outputSensor(double AlKnee, double AlHip, double ArHip, double ArKnee, double VlKnee, double VlHip, double VrHip, double VrKnee)
+        public void outputSensor(double AlKnee, double AlHip, double ArHip, double ArKnee, double VlKnee, double VlHip, double VrHip, double VrKnee, int PulseFreF, int PulseWidthFL, int PulseWidthFR)
         { //输出几列数据
             //StreamWriter sw = new StreamWriter("gait.txt");
             FileStream F = new FileStream("AngVel.txt", FileMode.Append, FileAccess.Write, FileShare.Write);
             StreamWriter sw = new StreamWriter(F);
-            sw.Write(AlKnee + "\t" + AlHip + "\t" + ArHip + "\t" + ArKnee + "\t" + VlKnee + "\t" + VlHip + "\t" + VrHip + "\t" + VrKnee + "\n");
+            sw.Write(AlKnee + "\t" + AlHip + "\t" + ArHip + "\t" + ArKnee + "\t" + VlKnee + "\t" + VlHip + "\t" + VrHip + "\t" + VrKnee + "\t" + PulseFreF + "\t" + PulseWidthFL + "\t" + PulseWidthFR + "\n");
             sw.Flush();
             sw.Close();
             F.Close();
